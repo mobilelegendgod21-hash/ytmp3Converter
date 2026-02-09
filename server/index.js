@@ -9,7 +9,10 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const YT_DLP_PATH = path.join(__dirname, process.platform === 'win32' ? 'yt-dlp.exe' : 'yt-dlp');
+// On Render (Linux), we'll use the pip-installed version which is in the PATH.
+// On Windows (Dev), we likely still want the local exe or we can assume user has it in PATH too.
+// For safety in dev, we can keep the check, but for Prod (Linux), we perform a specific check.
+const YT_DLP_PATH = process.platform === 'win32' ? path.join(__dirname, 'yt-dlp.exe') : 'yt-dlp';
 
 app.use(cors({
     origin: [
