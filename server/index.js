@@ -11,7 +11,15 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const YT_DLP_PATH = path.join(__dirname, 'yt-dlp.exe');
 
-app.use(cors());
+app.use(cors({
+    origin: [
+        'http://localhost:5173',
+        'https://ytmp3-converter-omega.vercel.app',
+        'https://rhein-mp3.vercel.app' // Just in case
+    ],
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type']
+}));
 app.use(express.json());
 
 // Main Route
