@@ -173,7 +173,7 @@ function initModals() {
 
     const originalText = btn.textContent;
     btn.textContent = "Coming Soon!";
-    // Check if button is mobile (different styling context) or desktop
+    // Check if button is mobile (different styling context) or desktops
     if (id === 'mobile-btn-signin') {
       btn.classList.add('text-red-500');
     } else {
@@ -198,7 +198,7 @@ function initInteractions() {
   const convertBtn = document.querySelector('#convert-btn')
   const input = document.querySelector('#url-input')
   const resultContainer = document.querySelector('#result-container')
-  const API_URL = 'http://localhost:3000'; // Hardcoded for dev, use env in prod
+  const API_URL = 'https://ytmp3converter-backend.onrender.com'; // Hardcoded for dev, use env in prod
 
   if (convertBtn && input) {
     const handleConvert = () => {
