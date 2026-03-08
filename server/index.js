@@ -39,17 +39,18 @@ app.get('/convert', (req, res) => {
 
     console.log(`Starting conversion for: ${videoURL}`);
 
-    // Set Headers for Download
-    // We don't know the title yet, so we'll set a generic one or try to fetch it first?
-    // Using a generic name for streaming is safer to avoid double-fetching.
-    // Or we can rely on frontend sending the title if we want.
-    // Let's settle for "audio.mp3" or try to fetch title quickly? 
-    // Fetching title adds delay. Let's send "download.mp3" and let user rename, or frontend can suggest name?
-    // Actually, we can fetch metadata first in frontend, so frontend knows the title.
-    // The browser prompt will use the name in Content-Disposition.
-    // Let's use "audio.mp3" for now to be fast, or "RheinMP3-Convert.mp3".
+    const providedTitle = req.query.title;
+    let filename = 'RheinMP3-Audio.mp3';
 
-    res.header('Content-Disposition', 'attachment; filename="RheinMP3-Audio.mp3"');
+    if (providedTitle) {
+        // Sanitize title to remove invalid characters for filenames
+        const sanitizedTitle = providedTitle.replace(/[/\\?%*:|"<>]/g, '-');
+        filename = `${sanitizedTitle}.mp3`;
+    }
+
+    // Set Headers for Download
+    // Using encodeURIComponent strictly to support non-ASCII characters without causing invalid header errors
+    res.header('Content-Disposition', `attachment; filename="${filename}"; filename*=UTF-8''${encodeURIComponent(filename)}`);
     res.header('Content-Type', 'audio/mpeg');
 
     // Spawn yt-dlp to stream MP3 to stdout

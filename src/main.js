@@ -256,7 +256,7 @@ function initInteractions() {
   function showResult(data, url) {
     if (!resultContainer) return
 
-    const downloadLink = `${API_URL}/convert?url=${encodeURIComponent(url)}`
+    const downloadLink = `${API_URL}/convert?url=${encodeURIComponent(url)}&title=${encodeURIComponent(data.title)}`;
 
     resultContainer.innerHTML = `
         <div class="sb-card w-full flex flex-col md:flex-row gap-6 animate-fade-in-up">
