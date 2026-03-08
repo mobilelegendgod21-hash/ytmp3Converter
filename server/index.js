@@ -61,7 +61,9 @@ app.get('/convert', (req, res) => {
         '--ffmpeg-location', ffmpegPath, // Use local ffmpeg
         '-o', '-',              // Output to stdout
         '--force-overwrites',
-        '--no-playlist'
+        '--no-playlist',
+        '--geo-bypass',         // Try to bypass regional blocking automatically
+        '--js-runtimes', 'node' // Explicitly use Node since Render provides it natively
     ];
 
     const ytDlpProcess = spawn(YT_DLP_PATH, args);
@@ -99,7 +101,9 @@ app.get('/info', (req, res) => {
         videoURL,
         '--dump-json',
         '--no-playlist',
-        '--skip-download'
+        '--skip-download',
+        '--geo-bypass',         // Try to bypass regional blocking automatically
+        '--js-runtimes', 'node' // Explicitly use Node since Render provides it natively
     ];
 
     const ytDlpProcess = spawn(YT_DLP_PATH, args);
