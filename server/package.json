@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "pip install yt-dlp && node index.js",
-    "build": "echo 'No build step'",
+    "start": "node index.js",
+    "build": "curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o yt-dlp && chmod a+rx yt-dlp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
