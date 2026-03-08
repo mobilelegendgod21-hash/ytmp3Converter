@@ -63,7 +63,8 @@ app.get('/convert', (req, res) => {
         '--force-overwrites',
         '--no-playlist',
         '--geo-bypass',         // Try to bypass regional blocking automatically
-        '--js-runtimes', 'node' // Explicitly use Node since Render provides it natively
+        '--js-runtimes', 'node',// Explicitly use Node since Render provides it natively
+        '--extractor-args', 'youtube:player_client=android' // Spoof mobile client to bypass YouTube bot detection
     ];
 
     const ytDlpProcess = spawn(YT_DLP_PATH, args);
@@ -103,7 +104,8 @@ app.get('/info', (req, res) => {
         '--no-playlist',
         '--skip-download',
         '--geo-bypass',         // Try to bypass regional blocking automatically
-        '--js-runtimes', 'node' // Explicitly use Node since Render provides it natively
+        '--js-runtimes', 'node',// Explicitly use Node since Render provides it natively
+        '--extractor-args', 'youtube:player_client=android' // Spoof mobile client to bypass YouTube bot detection
     ];
 
     const ytDlpProcess = spawn(YT_DLP_PATH, args);
