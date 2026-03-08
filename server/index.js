@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const { spawn } = require('child_process');
 const path = require('path');
+const fs = require('fs');
 const ffmpegPath = require('ffmpeg-static');
 const dotenv = require('dotenv');
 
@@ -64,8 +65,13 @@ app.get('/convert', (req, res) => {
         '--no-playlist',
         '--geo-bypass',         // Try to bypass regional blocking automatically
         '--js-runtimes', 'node',// Explicitly use Node since Render provides it natively
-        '--extractor-args', 'youtube:player_client=android' // Spoof mobile client to bypass YouTube bot detection
+        '--extractor-args', 'youtube:player_client=android,web' // Spoof clients to bypass YouTube bot detection
     ];
+
+    const cookiesPath = path.join(__dirname, 'cookies.txt');
+    if (fs.existsSync(cookiesPath)) {
+        args.push('--cookies', cookiesPath);
+    }
 
     const ytDlpProcess = spawn(YT_DLP_PATH, args);
 
@@ -105,8 +111,13 @@ app.get('/info', (req, res) => {
         '--skip-download',
         '--geo-bypass',         // Try to bypass regional blocking automatically
         '--js-runtimes', 'node',// Explicitly use Node since Render provides it natively
-        '--extractor-args', 'youtube:player_client=android' // Spoof mobile client to bypass YouTube bot detection
+        '--extractor-args', 'youtube:player_client=android,web' // Spoof clients to bypass YouTube bot detection
     ];
+
+    const cookiesPath = path.join(__dirname, 'cookies.txt');
+    if (fs.existsSync(cookiesPath)) {
+        args.push('--cookies', cookiesPath);
+    }
 
     const ytDlpProcess = spawn(YT_DLP_PATH, args);
     let outputData = '';
